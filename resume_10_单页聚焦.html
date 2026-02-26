@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简历</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+    background: #fff;
+    padding: 0;
+    color: #1a1a1a;
+}
+.page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 40px 50px;
+}
+.header {
+    border-bottom: 3px solid #000;
+    padding-bottom: 25px;
+    margin-bottom: 30px;
+}
+.top-row { display: flex; justify-content: space-between; align-items: flex-start; }
+.name-block { flex: 1; }
+.name { font-size: 40px; font-weight: bold; letter-spacing: 2px; }
+.title { font-size: 16px; color: #666; margin-top: 8px; letter-spacing: 1px; }
+.contact-block { text-align: right; font-size: 12px; color: #666; }
+.contact-item { margin-bottom: 5px; }
+.summary {
+    font-size: 13px;
+    line-height: 1.8;
+    color: #333;
+    margin-top: 20px;
+    max-width: 90%;
+}
+.section { margin-bottom: 22px; }
+.section-title {
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    color: #000;
+}
+.section-title::after {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 2px;
+    background: #000;
+    margin-top: 6px;
+}
+.work-grid { display: grid; grid-template-columns: 130px 1fr; gap: 20px; }
+.work-date { font-size: 12px; color: #666; font-weight: 500; }
+.work-block { margin-bottom: 15px; }
+.work-role { font-size: 14px; font-weight: bold; }
+.work-company { font-size: 12px; color: #666; }
+.work-achievements {
+    font-size: 11px;
+    line-height: 1.7;
+    color: #444;
+    margin-top: 6px;
+}
+.project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.project-item { font-size: 11px; }
+.project-name { font-weight: bold; color: #000; }
+.project-desc { color: #666; margin-top: 3px; line-height: 1.5; }
+.edu-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; }
+.edu-school { font-weight: bold; }
+.edu-date { color: #666; font-size: 12px; }
+.edu-detail { font-size: 11px; color: #666; }
+.skills-container { display: flex; flex-wrap: wrap; gap: 6px; }
+.skill {
+    font-size: 10px;
+    padding: 3px 8px;
+    background: #f5f5f5;
+    color: #333;
+}
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.two-col .section { margin-bottom: 18px; }
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="header">
+        <div class="top-row">
+            <div class="name-block">
+                <div class="name">李明</div>
+                <div class="title">SENIOR BACKEND ENGINEER</div>
+            </div>
+            <div class="contact-block">
+                <div class="contact-item">liming@example.com</div>
+                <div class="contact-item">+86 138-0000-0000</div>
+                <div class="contact-item">Beijing, China</div>
+                <div class="contact-item">github.com/liming</div>
+            </div>
+        </div>
+        <div class="summary">
+            9年后端开发经验，专注于高并发系统设计与微服务架构。在美团、字节跳动负责过千万级用户系统的技术方案与落地。擅长用工程化思维解决问题，追求代码质量与系统可维护性。
+        </div>
+    </div>
+
+    <div class="two-col">
+        <div>
+            <div class="section">
+                <div class="section-title">Experience</div>
+                <div class="work-grid">
+                    <div class="work-date">2021-Now</div>
+                    <div class="work-block">
+                        <div class="work-role">ByteDance | Senior Engineer</div>
+                        <div class="work-company">Infrastructure Team</div>
+                        <div class="work-achievements">
+                            • 架构设计：支付中台微服务系统<br>
+                            • 性能优化：核心链路QPS提升200%<br>
+                            • 团队建设：Code Review机制与最佳实践
+                        </div>
+                    </div>
+                </div>
+                <div class="work-grid">
+                    <div class="work-date">2018-2021</div>
+                    <div class="work-block">
+                        <div class="work-role">Meituan | Tech Lead</div>
+                        <div class="work-company">Order System Team</div>
+                        <div class="work-achievements">
+                            • 主导订单系统重构，支持日均5000万单<br>
+                            • 设计分布式事务解决方案<br>
+                            • 监控告警体系建设
+                        </div>
+                    </div>
+                </div>
+                <div class="work-grid">
+                    <div class="work-date">2015-2018</div>
+                    <div class="work-block">
+                        <div class="work-role">Didi Chuxing | Backend Engineer</div>
+                        <div class="work-company">Core Platform</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Key Projects</div>
+                <div class="project-grid">
+                    <div class="project-item">
+                        <div class="project-name">支付路由系统</div>
+                        <div class="project-desc">智能路由，支持100+渠道，成功率99.95%</div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-name">热key缓存</div>
+                        <div class="project-desc">热点数据自动识别与本地缓存</div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-name">限流降级平台</div>
+                        <div class="project-desc">可视化配置，秒级生效</div>
+                    </div>
+                    <div class="project-item">
+                        <div class="project-name">链路追踪系统</div>
+                        <div class="project-desc">全链路性能分析与问题定位</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="section">
+                <div class="section-title">Education</div>
+                <div class="edu-row">
+                    <span class="edu-school">Tsinghua University</span>
+                    <span class="edu-date">2015</span>
+                </div>
+                <div class="edu-detail">Master of Computer Science</div>
+                <div class="edu-row" style="margin-top: 10px;">
+                    <span class="edu-school">Tsinghua University</span>
+                    <span class="edu-date">2012</span>
+                </div>
+                <div class="edu-detail">Bachelor of Software Engineering</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Technical Skills</div>
+                <div class="skills-container">
+                    <span class="skill">Java</span>
+                    <span class="skill">Go</span>
+                    <span class="skill">Spring Cloud</span>
+                    <span class="skill">gRPC</span>
+                    <span class="skill">MySQL</span>
+                    <span class="skill">Redis</span>
+                    <span class="skill">Kafka</span>
+                    <span class="skill">Kubernetes</span>
+                    <span class="skill">Docker</span>
+                    <span class="skill">Linux</span>
+                    <span class="skill">MySQL优化</span>
+                    <span class="skill">分布式系统</span>
+                    <span class="skill">微服务</span>
+                    <span class="skill">高并发</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Languages</div>
+                <div class="skills-container">
+                    <span class="skill">中文 Native</span>
+                    <span class="skill">English Fluent</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Interests</div>
+                <div class="skills-container">
+                    <span class="skill">开源贡献</span>
+                    <span class="skill">技术写作</span>
+                    <span class="skill">马拉松</span>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">Certifications</div>
+                <div class="skills-container">
+                    <span class="skill">CKA</span>
+                    <span class="skill">AWS Solutions Architect</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

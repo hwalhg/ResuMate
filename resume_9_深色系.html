@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简历</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "Segoe UI", "Roboto", "PingFang SC", sans-serif;
+    background: #0d1117;
+    padding: 35px;
+}
+.container {
+    max-width: 750px;
+    margin: 0 auto;
+    background: #161b22;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #30363d;
+}
+.header {
+    background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+    padding: 40px;
+    color: #fff;
+}
+.name { font-size: 34px; font-weight: bold; }
+.title { font-size: 18px; opacity: 0.9; margin-top: 10px; }
+.contact { font-size: 14px; opacity: 0.8; margin-top: 15px; }
+.content { padding: 35px 40px; }
+.section { margin-bottom: 30px; }
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #c9d1d9;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.section-title::before {
+    content: "▶";
+    color: #238636;
+    font-size: 10px;
+}
+.item { margin-bottom: 20px; }
+.item-title { font-size: 16px; font-weight: bold; color: #e6edf3; }
+.item-subtitle { font-size: 14px; color: #8b949e; margin-top: 5px; }
+.item-header { display: flex; justify-content: space-between; align-items: center; }
+.item-date { font-size: 13px; color: #238636; }
+.item-content {
+    font-size: 14px;
+    color: #8b949e;
+    line-height: 1.8;
+    margin-top: 10px;
+}
+.code-block {
+    background: #0d1117;
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    color: #e6edf3;
+    margin-top: 10px;
+    border-left: 3px solid #238636;
+}
+.tech-stack { display: flex; flex-wrap: wrap; gap: 8px; }
+.tech-item {
+    background: #21262d;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: #58a6ff;
+    border-radius: 4px;
+    border: 1px solid #30363d;
+}
+.highlight { color: #e6edf3; }
+.stat-row { display: flex; gap: 30px; margin-top: 15px; }
+.stat-item { flex: 1; background: #0d1117; padding: 15px; border-radius: 6px; text-align: center; }
+.stat-num { font-size: 28px; font-weight: bold; color: #238636; }
+.stat-label { font-size: 12px; color: #8b949e; margin-top: 5px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="name">王十一</div>
+        <div class="title">Senior Software Engineer</div>
+        <div class="contact">📧 wang11@github.com | 📍 Shenzhen | 🔗 github.com/wang11</div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <div class="section-title">About</div>
+            <div class="item-content" style="margin-top: 0;">
+                8年全栈开发经验，热爱开源，GitHub贡献者。专注于高并发系统设计和云原生技术实践。相信代码应该像诗一样优雅，追求简洁与极致。
+            </div>
+            <div class="stat-row">
+                <div class="stat-item">
+                    <div class="stat-num">8+</div>
+                    <div class="stat-label">Years Exp</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">50+</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">2K+</div>
+                    <div class="stat-label">Commits/Year</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Work Experience</div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">Senior Engineer @ PingCAP</div>
+                    <div class="item-date">2021 - Present</div>
+                </div>
+                <div class="item-subtitle">Distributed Database Team</div>
+                <div class="item-content">
+                    • Core developer of TiDB ecosystem<br>
+                    • Optimized query engine, QPS improved by 3x<br>
+                    • Open source maintainer with 100+ merged PRs
+                </div>
+                <div class="code-block">git log --author="wang11" --oneline | wc -l<br>1,247 contributions in 2023</div>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">Tech Lead @ ByteDance</div>
+                    <div class="item-date">2018 - 2021</div>
+                </div>
+                <div class="item-subtitle">Infrastructure Team</div>
+                <div class="item-content">
+                    • Architected internal service mesh platform<br>
+                    • Reduced service latency by 40%<br>
+                    • Led 10-person team, built CI/CD pipeline
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Open Source Projects</div>
+            <div class="item">
+                <div class="item-title">db-go-client</div>
+                <div class="item-subtitle">★ 2.3k stars on GitHub</div>
+                <div class="item-content">
+                    High-performance Go client for distributed databases. Used by 500+ companies worldwide.
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">prometheus-exporter</div>
+                <div class="item-subtitle">★ 890 stars on GitHub</div>
+                <div class="item-content">
+                    Custom Prometheus metrics exporter for cloud-native applications.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Tech Stack</div>
+            <div class="tech-stack">
+                <span class="tech-item">Go</span>
+                <span class="tech-item">Rust</span>
+                <span class="tech-item">Kubernetes</span>
+                <span class="tech-item">TiDB</span>
+                <span class="tech-item">gRPC</span>
+                <span class="tech-item">Prometheus</span>
+                <span class="tech-item">etcd</span>
+                <span class="tech-item">Docker</span>
+                <span class="tech-item">Linux</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Education</div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">Zhejiang University</div>
+                    <div class="item-date">2014 - 2017</div>
+                </div>
+                <div class="item-subtitle">Master of Computer Science</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

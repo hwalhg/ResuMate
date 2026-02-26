@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简历</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #fff;
+    padding: 50px;
+}
+.container { max-width: 700px; margin: 0 auto; }
+.header {
+    text-align: left;
+    padding-bottom: 40px;
+}
+.name {
+    font-size: 42px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    color: #1a1a1a;
+}
+.role {
+    font-size: 16px;
+    color: #888;
+    margin-top: 10px;
+    letter-spacing: 4px;
+}
+.divider {
+    width: 40px;
+    height: 1px;
+    background: #ddd;
+    margin: 25px 0 20px;
+}
+.section { margin-bottom: 35px; }
+.section-label {
+    font-size: 11px;
+    color: #aaa;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+.work-item { margin-bottom: 30px; }
+.work-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+.work-company { font-size: 14px; color: #666; margin-top: 3px; }
+.work-period { font-size: 12px; color: #999; margin-top: 4px; }
+.work-desc {
+    font-size: 14px;
+    color: #555;
+    line-height: 2;
+    margin-top: 12px;
+}
+.education-item { margin-bottom: 20px; }
+.school { font-size: 16px; color: #1a1a1a; }
+.major { font-size: 14px; color: #666; margin-top: 3px; }
+.contact-item {
+    font-size: 12px;
+    color: #999;
+    margin-top: 6px;
+    letter-spacing: 1px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="name">陈七</div>
+        <div class="role">TECHNICAL DIRECTOR</div>
+        <div class="divider"></div>
+        <div class="contact-item">chenqi@tech.com</div>
+        <div class="contact-item">+86 138 0000 0000</div>
+        <div class="contact-item">Shenzhen, China</div>
+    </div>
+
+    <div class="section">
+        <div class="section-label">About</div>
+        <div class="work-desc">
+            12年技术研发与管理经验，历任多家互联网公司技术负责人。擅长技术战略规划、团队建设、大型系统架构设计。相信技术是为业务服务的，追求简单优雅的解决方案。
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-label">Experience</div>
+        <div class="work-item">
+            <div class="work-title">技术总监</div>
+            <div class="work-company">蚂蚁集团 | 2020 - Present</div>
+            <div class="work-period">四年</div>
+            <div class="work-desc">
+                • 负责支付中台技术架构设计与演进<br>
+                • 管理50人技术团队，建立技术文化<br>
+                • 主导核心系统云原生改造，成本降低30%
+            </div>
+        </div>
+        <div class="work-item">
+            <div class="work-title">高级技术专家</div>
+            <div class="work-company">阿里巴巴 | 2017 - 2020</div>
+            <div class="work-period">三年</div>
+            <div class="work-desc">
+                • 负责淘宝交易链路系统架构<br>
+                • 支撑双11峰值，系统可用性99.99%<br>
+                • 设计分布式缓存方案，提升性能10倍
+            </div>
+        </div>
+        <div class="work-item">
+            <div class="work-title">架构师</div>
+            <div class="work-company">腾讯 | 2014 - 2017</div>
+            <div class="work-period">三年</div>
+            <div class="work-desc">
+                • 参与微信支付系统建设<br>
+                • 设计高可用架构方案<br>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-label">Education</div>
+        <div class="education-item">
+            <div class="school">浙江大学</div>
+            <div class="major">计算机科学与技术 · 硕士 · 2012 - 2014</div>
+        </div>
+        <div class="education-item">
+            <div class="school">浙江大学</div>
+            <div class="major">软件工程 · 学士 · 2008 - 2012</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-label">Skills</div>
+        <div class="work-desc">
+            Java · Go · 微服务 · 分布式系统 · 云原生<br>
+            团队管理 · 技术战略 · 系统架构
+        </div>
+    </div>
+</div>
+</body>
+</html>

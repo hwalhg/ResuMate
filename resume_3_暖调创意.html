@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简历</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #fff9f0;
+    padding: 35px;
+}
+.container {
+    max-width: 780px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.header {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ffa502 100%);
+    padding: 45px 40px;
+    position: relative;
+}
+.header::after {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    left: 40px;
+    width: 60px;
+    height: 60px;
+    background: #fff;
+    border-radius: 50%;
+}
+.name { font-size: 38px; font-weight: bold; color: #fff; }
+.title { font-size: 20px; color: #fff; margin-top: 10px; opacity: 0.95; }
+.contact {
+    font-size: 14px;
+    color: #fff;
+    margin-top: 18px;
+    opacity: 0.85;
+}
+.content { padding: 35px 40px; }
+.section { margin-bottom: 30px; }
+.section-title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff6b6b;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+}
+.section-title span {
+    width: 35px;
+    height: 3px;
+    background: #ffa502;
+    margin-left: 12px;
+}
+.item { margin-bottom: 22px; }
+.item-header { display: flex; justify-content: space-between; align-items: baseline; }
+.item-title { font-size: 17px; font-weight: bold; color: #333; }
+.item-date { font-size: 14px; color: #ff6b6b; }
+.item-subtitle { font-size: 15px; color: #666; margin-top: 4px; }
+.item-content { font-size: 14px; color: #777; line-height: 1.9; margin-top: 10px; }
+.tag-group { display: flex; flex-wrap: wrap; gap: 10px; }
+.tag {
+    background: linear-gradient(135deg, #fff4e6 0%, #ffe8d1 100%);
+    padding: 6px 16px;
+    font-size: 14px;
+    color: #e67e22;
+    border-radius: 20px;
+    border: 1px solid #ffe0b2;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="name">王五</div>
+        <div class="title">UI/UX 设计师</div>
+        <div class="contact">📱 186-0000-0000 | ✉️ wangwu@design.com | 📍 上海市</div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <div class="section-title">关于我<span></span></div>
+            <div class="item-content" style="margin-top: 0;">
+                热爱设计，追求极致用户体验。6年设计经验，主导过多个千万级用户产品。擅长从用户需求出发，用设计解决真实问题。相信好的设计应该优雅而实用。
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">工作经历<span></span></div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">小红书 | 高级UI设计师</div>
+                    <div class="item-date">2021.06 - 至今</div>
+                </div>
+                <div class="item-subtitle">负责社区与创作工具产品线设计</div>
+                <div class="item-content">
+                    • 主导笔记发布器改版，发布率提升28%<br>
+                    • 设计内容创作工具体系，用户创作积极性提升35%<br>
+                    • 建立设计规范系统，提升团队协作效率
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">网易 | UI设计师</div>
+                    <div class="item-date">2018.07 - 2021.05</div>
+                </div>
+                <div class="item-subtitle">负责网易云音乐产品设计</div>
+                <div class="item-content">
+                    • 参与播放器、歌单等核心功能设计<br>
+                    • 设计个性化推荐界面，用户停留时长增加22%<br>
+                    • 输出高质量设计稿，获得团队认可
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">精选项目<span></span></div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">小红书创作中心</div>
+                    <div class="item-date">2023.01 - 2023.12</div>
+                </div>
+                <div class="item-subtitle">一站式创作者服务平台</div>
+                <div class="item-content">
+                    面向内容创作者的综合服务平台，整合创作、数据分析、变现等功能。通过简约直观的设计降低使用门槛，让创作者专注于内容本身。
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">教育背景<span></span></div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">中国美术学院 | 视觉传达设计 | 本科</div>
+                    <div class="item-date">2014.09 - 2018.06</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">专业技能<span></span></div>
+            <div class="tag-group">
+                <span class="tag">Figma</span>
+                <span class="tag">Sketch</span>
+                <span class="tag">Photoshop</span>
+                <span class="tag">Illustrator</span>
+                <span class="tag">After Effects</span>
+                <span class="tag">C4D</span>
+                <span class="tag">交互设计</span>
+                <span class="tag">动效设计</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

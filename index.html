@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 简历生成器 - Resume Generator</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+    --primary: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-light: #f8fafc;
+    --border: #e2e8f0;
+    --text-dark: #1e293b;
+    --text-gray: #64748b;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+    background: var(--bg-light);
+    color: var(--text-dark);
+    min-height: 100vh;
+}
+.header {
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+    color: #fff;
+    padding: 20px 40px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.header h1 { font-size: 24px; font-weight: 600; }
+.header p { font-size: 14px; opacity: 0.9; margin-top: 5px; }
+.main {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 0;
+    height: calc(100vh - 80px);
+    overflow: hidden;
+}
+.sidebar {
+    background: #fff;
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 20px;
+}
+.preview {
+    background: #e2e8f0;
+    padding: 30px;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+}
+.preview-frame {
+    background: #fff;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    transform-origin: top center;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 4px;
+    margin-bottom: 20px;
+}
+.tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 13px;
+    color: var(--text-gray);
+    transition: all 0.2s;
+}
+.tab.active {
+    background: #fff;
+    color: var(--primary);
+    font-weight: 500;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Form Groups */
+.form-group { margin-bottom: 16px; }
+.form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+.form-input, .form-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    transition: border-color 0.2s;
+}
+.form-input:focus, .form-textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+.form-textarea { min-height: 80px; resize: vertical; }
+
+/* Section Divider */
+.section-divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0 15px;
+    color: var(--text-gray);
+    font-size: 12px;
+}
+.section-divider::before, .section-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+.section-divider span { padding: 0 10px; }
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+}
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dark);
+}
+.btn-outline:hover { background: #f1f5f9; }
+.btn-success {
+    background: #10b981;
+    color: #fff;
+}
+.btn-success:hover { background: #059669; }
+.btn-full { width: 100%; }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* AI Generate Section */
+.ai-section {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1px solid #fbbf24;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+.ai-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    color: #92400e;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+.ai-prompt {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #fbbf24;
+    border-radius: 6px;
+    font-size: 13px;
+    background: #fff;
+    margin-bottom: 10px;
+}
+.ai-loading {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    color: #92400e;
+    font-size: 13px;
+    padding: 10px;
+    background: rgba(255,255,255,0.7);
+    border-radius: 6px;
+}
+.ai-loading.active { display: flex; }
+.ai-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #fbbf24;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Template Selector */
+.template-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 20px;
+}
+.template-option {
+    aspect-ratio: 210/297;
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--text-gray);
+}
+.template-option:hover { border-color: var(--primary); }
+.template-option.active {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    color: var(--primary);
+    font-weight: 500;
+}
+
+/* Work Experience Items */
+.work-item {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+.work-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.work-title-input {
+    font-weight: 500;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    flex: 1;
+}
+.work-title-input:focus { outline: none; }
+.btn-remove {
+    color: #ef4444;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+.btn-add {
+    width: 100%;
+    padding: 10px;
+    border: 1px dashed var(--border);
+    background: #f8fafc;
+    border-radius: 8px;
+    color: var(--text-gray);
+    cursor: pointer;
+    font-size: 13px;
+}
+.btn-add:hover { border-color: var(--primary); color: var(--primary); }
+
+/* Skills Tags */
+.skills-input-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    min-height: 44px;
+}
+.skill-tag {
+    background: #dbeafe;
+    color: var(--primary);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.skill-tag span { cursor: pointer; }
+.skills-input {
+    flex: 1;
+    min-width: 100px;
+    border: none;
+    outline: none;
+    font-size: 13px;
+}
+
+/* Export Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+    background: #fff;
+    border-radius: 12px;
+    padding: 25px;
+    min-width: 320px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+.modal-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+.export-options {
+    display: grid;
+    gap: 10px;
+}
+.export-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.export-option:hover { border-color: var(--primary); background: #eff6ff; }
+.export-option input { accent-color: var(--primary); }
+.export-icon {
+    width: 40px;
+    height: 40px;
+    background: #eff6ff;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+/* Scale for preview */
+@media (max-width: 1400px) {
+    .preview-frame { transform: scale(0.85); }
+}
+@media (max-width: 1100px) {
+    .preview-frame { transform: scale(0.7); }
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>📄 AI 简历生成器</h1>
+    <p>智能生成精美简历，10套模板随心切换</p>
+</div>
+
+<div class="main">
+    <!-- 左侧编辑区 -->
+    <div class="sidebar">
+        <!-- AI 生成区 -->
+        <div class="ai-section">
+            <div class="ai-title">✨ AI 智能生成</div>
+            <input type="text" id="aiPrompt" class="ai-prompt" placeholder="描述你的目标，如：前端工程师，3年经验，投递互联网公司...">
+            <div class="ai-loading" id="aiLoading">
+                <div class="ai-spinner"></div>
+                <span>AI 正在生成...</span>
+            </div>
+            <button class="btn btn-full btn-primary" id="btnAIGenerate" onclick="generateResume()">
+                🤖 AI 生成简历
+            </button>
+        </div>
+
+        <!-- 模板选择 -->
+        <div class="form-label">选择模板</div>
+        <div class="template-selector" id="templateSelector">
+            <!-- 动态生成 -->
+        </div>
+
+        <!-- 输入表单 -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('basic')">基本信息</div>
+            <div class="tab" onclick="switchTab('work')">工作经历</div>
+            <div class="tab" onclick="switchTab('project')">项目经验</div>
+            <div class="tab" onclick="switchTab('skills')">技能教育</div>
+        </div>
+
+        <div id="tab-basic" class="tab-content">
+            <div class="form-group">
+                <label class="form-label">姓名</label>
+                <input type="text" class="form-input" id="name" value="张三" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label class="form-label">职位/头衔</label>
+                <input type="text" class="form-input" id="title" value="高级前端工程师" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label class="form-label">联系电话</label>
+                <input type="text" class="form-input" id="phone" value="138-0000-0000" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label class="form-label">邮箱</label>
+                <input type="text" class="form-input" id="email" value="zhangsan@email.com" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label class="form-label">所在城市</label>
+                <input type="text" class="form-input" id="city" value="北京市" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label class="form-label">个人简介</label>
+                <textarea class="form-textarea" id="summary" oninput="updatePreview()">5年前端开发经验，精通React、Vue等主流框架，具备大型项目架构能力。追求代码质量和用户体验，有良好的团队协作和技术分享精神。</textarea>
+            </div>
+        </div>
+
+        <div id="tab-work" class="tab-content" style="display: none;">
+            <div id="workItems"></div>
+            <button class="btn-add" onclick="addWorkItem()">+ 添加工作经历</button>
+        </div>
+
+        <div id="tab-project" class="tab-content" style="display: none;">
+            <div class="form-group">
+                <label class="form-label">项目名称</label>
+                <input type="text" class="form-input" id="projectName" placeholder="如：企业级低代码平台" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label class="form-label">项目时间</label>
+                <input type="text" class="form-input" id="projectTime" placeholder="如：2022.01 - 2023.12" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label class="form-label">项目角色</label>
+                <input type="text" class="form-input" id="projectRole" placeholder="如：核心开发者" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label class="form-label">项目描述</label>
+                <textarea class="form-textarea" id="projectDesc" oninput="updatePreview()" placeholder="描述项目背景、你的贡献和成果..."></textarea>
+            </div>
+        </div>
+
+        <div id="tab-skills" class="tab-content" style="display: none;">
+            <div class="form-group">
+                <label class="form-label">专业技能（回车添加标签）</label>
+                <div class="skills-input-container" id="skillsContainer">
+                    <input type="text" class="skills-input" id="skillInput" placeholder="输入技能后回车...">
+                </div>
+            </div>
+            <div class="section-divider"><span>教育背景</span></div>
+            <div class="form-group">
+                <label class="form-label">学校名称</label>
+                <input type="text" class="form-input" id="school" value="清华大学" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label class="form-label">专业/学位</label>
+                <input type="text" class="form-input" id="major" value="计算机科学与技术 | 本科" oninput="updatePreview()">
+            </div>
+            <div class="form-group">
+                <label class="form-label">毕业时间</label>
+                <input type="text" class="form-input" id="gradTime" value="2015.09 - 2019.06" oninput="updatePreview()">
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border);">
+            <button class="btn btn-full btn-success" onclick="showExportModal()">
+                📥 导出简历
+            </button>
+        </div>
+    </div>
+
+    <!-- 右侧预览区 -->
+    <div class="preview">
+        <div class="preview-frame" id="previewFrame">
+            <!-- 动态渲染 -->
+        </div>
+    </div>
+</div>
+
+<!-- 导出弹窗 -->
+<div class="modal-overlay" id="exportModal">
+    <div class="modal">
+        <div class="modal-title">选择导出格式</div>
+        <div class="export-options">
+            <label class="export-option">
+                <input type="radio" name="export" value="html" checked>
+                <div class="export-icon">📄</div>
+                <div>
+                    <div style="font-weight: 500;">HTML 文件</div>
+                    <div style="font-size: 12px; color: var(--text-gray);">可继续编辑</div>
+                </div>
+            </label>
+            <label class="export-option">
+                <input type="radio" name="export" value="pdf">
+                <div class="export-icon">📋</div>
+                <div>
+                    <div style="font-weight: 500;">PDF 文件</div>
+                    <div style="font-size: 12px; color: var(--text-gray);">打印即存</div>
+                </div>
+            </label>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px;">
+            <button class="btn btn-outline btn-full" onclick="hideExportModal()">取消</button>
+            <button class="btn btn-primary btn-full" onclick="exportResume()">确认导出</button>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简历</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "Microsoft YaHei", sans-serif;
+    background: #f0f4f8;
+    padding: 30px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 2px 20px rgba(0,80,150,0.1);
+}
+.header {
+    background: linear-gradient(135deg, #0056b3 0%, #007bff 100%);
+    padding: 40px;
+    color: #fff;
+}
+.name { font-size: 32px; font-weight: bold; }
+.title { font-size: 18px; opacity: 0.9; margin-top: 8px; }
+.contact { font-size: 14px; opacity: 0.8; margin-top: 15px; }
+.content { padding: 30px 40px; }
+.section { margin-bottom: 25px; }
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0056b3;
+    border-bottom: 2px solid #e1e8ed;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+.section-title::before {
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    background: #007bff;
+    margin-right: 10px;
+}
+.item { margin-bottom: 18px; padding-left: 14px; border-left: 1px solid #e1e8ed; }
+.item-title { font-size: 16px; font-weight: bold; color: #333; }
+.item-subtitle { font-size: 14px; color: #007bff; margin-top: 4px; }
+.item-content { font-size: 14px; color: #666; line-height: 1.7; margin-top: 8px; }
+.skills { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-tag {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    padding: 5px 14px;
+    font-size: 14px;
+    color: #0056b3;
+    border-radius: 15px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="name">李四</div>
+        <div class="title">产品经理 | 5年经验</div>
+        <div class="contact">手机：139-0000-0000 | 邮箱：lisi@company.com | 微信：lisi2024</div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <div class="section-title">个人简介</div>
+            <div class="item" style="border-left: none; padding-left: 0;">
+                5年互联网产品经验，主导过千万级用户产品。擅长用户增长、商业化策略、数据驱动决策。具有良好的跨团队协作能力和项目管理经验。
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">工作经历</div>
+            <div class="item">
+                <div class="item-title">腾讯 | 高级产品经理</div>
+                <div class="item-subtitle">2021.01 - 至今</div>
+                <div class="item-content">
+                    • 负责微信支付商户平台产品规划与迭代<br>
+                    • 主导商户增长项目，月活商户提升35%<br>
+                    • 搭建数据分析体系，支撑业务决策
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-title">美团 | 产品经理</div>
+                <div class="item-subtitle">2019.03 - 2020.12</div>
+                <div class="item-content">
+                    • 负责外卖商家端核心功能<br>
+                    • 优化商家操作流程，订单处理效率提升25%<br>
+                    • 设计商家激励体系，留存率提升18%
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">核心项目</div>
+            <div class="item">
+                <div class="item-title">商户智能营销系统</div>
+                <div class="item-subtitle">2022.06 - 2023.03 | 项目负责人</div>
+                <div class="item-content">
+                    基于大数据的智能营销推荐系统，为商户提供个性化营销方案。覆盖商户数10万+，营销ROI提升40%。
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">教育背景</div>
+            <div class="item">
+                <div class="item-title">北京大学 | 经济学 | 硕士</div>
+                <div class="item-subtitle">2017.09 - 2019.06</div>
+            </div>
+            <div class="item">
+                <div class="item-title">武汉大学 | 工商管理 | 本科</div>
+                <div class="item-subtitle">2013.09 - 2017.06</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">专业技能</div>
+            <div class="skills">
+                <span class="skill-tag">产品规划</span>
+                <span class="skill-tag">数据分析</span>
+                <span class="skill-tag">A/B测试</span>
+                <span class="skill-tag">用户调研</span>
+                <span class="skill-tag">项目管理</span>
+                <span class="skill-tag">SQL/Python</span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

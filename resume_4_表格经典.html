@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简历</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "SimSun", "宋体", serif;
+    background: #fff;
+    padding: 20px;
+}
+.container {
+    max-width: 750px;
+    margin: 0 auto;
+    border: 1px solid #000;
+}
+.header {
+    background: #1a1a1a;
+    padding: 20px;
+    text-align: center;
+}
+.name { font-size: 28px; font-weight: bold; color: #fff; letter-spacing: 3px; }
+.content { padding: 20px 30px; }
+.section { margin-bottom: 20px; }
+.section-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+    background: #e8e8e8;
+    padding: 8px 15px;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+}
+table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+td { padding: 8px 0; vertical-align: top; font-size: 14px; line-height: 1.8; }
+.label { color: #333; font-weight: bold; width: 120px; }
+.value { color: #555; }
+.item-row { border-bottom: 1px solid #ddd; }
+.info-row td { padding: 5px 0; }
+.highlight { color: #000; font-weight: bold; }
+.skills { display: inline-block; background: #f0f0f0; padding: 3px 10px; margin: 2px 5px 2px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="name">个 人 简 历</div>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <div class="section-title">基 本 信 息</div>
+            <table>
+                <tr class="info-row">
+                    <td class="label">姓　　名：</td>
+                    <td class="value">赵六</td>
+                    <td class="label">性　　别：</td>
+                    <td class="value">男</td>
+                </tr>
+                <tr class="info-row">
+                    <td class="label">出生年月：</td>
+                    <td class="value">1994年3月</td>
+                    <td class="label">政治面貌：</td>
+                    <td class="value">中共党员</td>
+                </tr>
+                <tr class="info-row">
+                    <td class="label">学　　历：</td>
+                    <td class="value">硕士</td>
+                    <td class="label">民　　族：</td>
+                    <td class="value">汉族</td>
+                </tr>
+                <tr class="info-row">
+                    <td class="label">联系电话：</td>
+                    <td class="value">137-0000-0000</td>
+                    <td class="label">电子邮箱：</td>
+                    <td class="value">zhaoliu@email.com</td>
+                </tr>
+                <tr class="info-row">
+                    <td class="label">现居住地：</td>
+                    <td class="value">北京市海淀区</td>
+                    <td class="label">籍　　贯：</td>
+                    <td class="value">山东省济南市</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">求 职 意 向</div>
+            <table>
+                <tr>
+                    <td class="label">期望岗位：</td>
+                    <td class="value highlight">Java开发工程师 / 后端工程师</td>
+                </tr>
+                <tr>
+                    <td class="label">期望城市：</td>
+                    <td class="value">北京 / 上海</td>
+                </tr>
+                <tr>
+                    <td class="label">期望薪资：</td>
+                    <td class="value">面议</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">教 育 背 景</div>
+            <table>
+                <tr class="item-row">
+                    <td class="label">2017.09 - 2020.06</td>
+                    <td class="value highlight">北京邮电大学 | 计算机技术 | 硕士</td>
+                </tr>
+                <tr class="item-row">
+                    <td class="label">2013.09 - 2017.06</td>
+                    <td class="value">山东大学 | 计算机科学与技术 | 本科</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">工 作 经 历</div>
+            <table>
+                <tr class="item-row">
+                    <td class="label">2020.07 - 至今</td>
+                    <td class="value">
+                        <div class="highlight">中国工商银行软件开发中心 | 软件工程师</div>
+                        <div style="margin-top: 5px; color: #666;">• 参与银行核心系统开发，负责资金清算模块</div>
+                        <div style="color: #666;">• 优化系统性能，日均处理交易量提升50%</div>
+                        <div style="color: #666;">• 编写技术文档，参与代码审查</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">项 目 经 历</div>
+            <table>
+                <tr class="item-row">
+                    <td class="label">2022.01 - 2022.12</td>
+                    <td class="value">
+                        <div class="highlight">分布式交易系统 | 核心开发</div>
+                        <div style="margin-top: 5px; color: #666;">基于Spring Cloud微服务架构，支持高并发交易处理</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">专 业 技 能</div>
+            <div style="padding: 5px 0;">
+                <span class="skills">Java</span>
+                <span class="skills">Spring Boot</span>
+                <span class="skills">MyBatis</span>
+                <span class="skills">MySQL</span>
+                <span class="skills">Redis</span>
+                <span class="skills">Kafka</span>
+                <span class="skills">Docker</span>
+                <span class="skills">Linux</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">自 我 评 价</div>
+            <div style="padding: 5px 0; color: #555; font-size: 14px; line-height: 1.8;">
+                本人性格沉稳，工作认真负责，具有良好的团队合作精神。熟悉Java开发技术栈，有大型金融系统开发经验。对待工作严谨细致，能够承受一定工作压力。
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

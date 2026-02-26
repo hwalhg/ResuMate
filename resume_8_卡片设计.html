@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简历</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+    background: #e8ecf1;
+    padding: 25px;
+}
+.container {
+    max-width: 850px;
+    margin: 0 auto;
+}
+.header {
+    text-align: center;
+    padding: 30px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    margin-bottom: 25px;
+    color: #fff;
+}
+.name { font-size: 36px; font-weight: bold; }
+.title { font-size: 18px; margin-top: 10px; opacity: 0.95; }
+.contact { font-size: 14px; margin-top: 15px; opacity: 0.85; }
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+.card {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.card-full { grid-column: span 2; }
+.card-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+.card-title::before {
+    content: "";
+    width: 4px;
+    height: 16px;
+    background: linear-gradient(to bottom, #667eea, #764ba2);
+    margin-right: 10px;
+    border-radius: 2px;
+}
+.info-row { display: flex; margin-bottom: 10px; }
+.info-label { width: 80px; font-size: 14px; color: #888; }
+.info-value { font-size: 14px; color: #333; font-weight: 500; }
+.exp-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0; }
+.exp-item:last-child { border-bottom: none; }
+.exp-role { font-size: 15px; font-weight: bold; color: #333; }
+.exp-company { font-size: 14px; color: #667eea; margin-top: 3px; }
+.exp-date { font-size: 12px; color: #999; margin-top: 4px; }
+.exp-desc { font-size: 13px; color: #666; line-height: 1.7; margin-top: 8px; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.skill-tag {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8edff 100%);
+    color: #667eea;
+    padding: 6px 14px;
+    font-size: 13px;
+    border-radius: 20px;
+}
+.edu-school { font-size: 15px; font-weight: bold; color: #333; }
+.edu-info { font-size: 13px; color: #666; margin-top: 4px; }
+.intro-text { font-size: 14px; color: #666; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="name">郑十</div>
+        <div class="title">应届毕业生 | 求产品运营/用户增长岗位</div>
+        <div class="contact">📧 zhengshi@email.com | 📱 188-0000-0000 | 📍 北京市朝阳区</div>
+    </div>
+
+    <div class="grid">
+        <div class="card card-full">
+            <div class="card-title">个人简介</div>
+            <div class="intro-text">
+                北京大学应届毕业生，市场营销专业。在校期间连续三年获得一等奖学金，担任学生会宣传部部长。对互联网行业充满热情，渴望在产品运营领域深耕，从用户需求出发，用数据驱动决策。
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">教育背景</div>
+            <div class="exp-item" style="border-bottom: none;">
+                <div class="edu-school">北京大学</div>
+                <div class="edu-info">市场营销 | 本科 | 2020.09 - 2024.06</div>
+                <div class="edu-info">GPA: 3.8/4.0 | 专业排名前5%</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">基本信息</div>
+            <div class="info-row">
+                <span class="info-label">出生年月</span>
+                <span class="info-value">2002年5月</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">政治面貌</span>
+                <span class="info-value">共青团员</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">英语水平</span>
+                <span class="info-value">CET-6 (550分)</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">到岗时间</span>
+                <span class="info-value">随时到岗</span>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">实习经历</div>
+            <div class="exp-item">
+                <div class="exp-role">用户运营实习生</div>
+                <div class="exp-company">字节跳动 | 2023.07 - 2023.09</div>
+                <div class="exp-date">暑期实习</div>
+                <div class="exp-desc">
+                    • 协助社区内容运营，日均处理内容1000+<br>
+                    • 参与用户调研，输出分析报告3份
+                </div>
+            </div>
+            <div class="exp-item" style="border-bottom: none;">
+                <div class="exp-role">运营助理</div>
+                <div class="exp-company">小红书 | 2022.12 - 2023.01</div>
+                <div class="exp-date">寒假实习</div>
+                <div class="exp-desc">
+                    • 协助品牌活动执行，触达用户50万+<br>
+                    • 整理运营数据，制作周报10+份
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">校园经历</div>
+            <div class="exp-item">
+                <div class="exp-role">学生会宣传部部长</div>
+                <div class="exp-date">2022.09 - 2023.06</div>
+                <div class="exp-desc">
+                    统筹宣传团队15人，运营公众号粉丝从5000增长至2万。
+                </div>
+            </div>
+            <div class="exp-item" style="border-bottom: none;">
+                <div class="exp-role">社团创始人</div>
+                <div class="exp-date">2021.03 - 至今</div>
+                <div class="exp-desc">
+                    创立数据分析社团，累计举办活动20+场，会员200+。
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-full">
+            <div class="card-title">专业技能</div>
+            <div class="skill-tags">
+                <span class="skill-tag">数据分析</span>
+                <span class="skill-tag">用户调研</span>
+                <span class="skill-tag">文案写作</span>
+                <span class="skill-tag">Excel/SPSS</span>
+                <span class="skill-tag">新媒体运营</span>
+                <span class="skill-tag">PS/Canva</span>
+                <span class="skill-tag">活动策划</span>
+                <span class="skill-tag">办公软件</span>
+            </div>
+        </div>
+
+        <div class="card card-full">
+            <div class="card-title">获奖荣誉</div>
+            <div class="exp-item" style="border-bottom: none;">
+                <div class="exp-desc">
+                    • 国家奖学金（2022）<br>
+                    • 全国大学生市场营销大赛二等奖（2023）<br>
+                    • 北京大学一等奖学金（连续三年）<br>
+                    • 优秀学生干部（2022、2023）
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

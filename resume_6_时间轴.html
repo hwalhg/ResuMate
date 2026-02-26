@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简历</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #fafafa;
+    padding: 30px;
+}
+.container {
+    max-width: 750px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+}
+.header {
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eee;
+}
+.name { font-size: 32px; font-weight: bold; color: #2c3e50; }
+.title { font-size: 18px; color: #7f8c8d; margin-top: 8px; }
+.contact {
+    font-size: 14px;
+    color: #95a5a6;
+    margin-top: 15px;
+}
+.section { margin-top: 35px; }
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+.section-title::before {
+    content: "";
+    width: 4px;
+    height: 18px;
+    background: linear-gradient(to bottom, #3498db, #2980b9);
+    margin-right: 10px;
+    border-radius: 2px;
+}
+.timeline { position: relative; padding-left: 30px; }
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 8px;
+    bottom: 0;
+    width: 2px;
+    background: #e0e0e0;
+}
+.timeline-item { position: relative; margin-bottom: 30px; }
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: 5px;
+    width: 14px;
+    height: 14px;
+    background: #3498db;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px #3498db;
+}
+.timeline-date {
+    font-size: 14px;
+    color: #3498db;
+    font-weight: 500;
+}
+.timeline-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-top: 4px;
+}
+.timeline-company {
+    font-size: 14px;
+    color: #7f8c8d;
+    margin-top: 2px;
+}
+.timeline-content {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.8;
+    margin-top: 10px;
+}
+.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.skill-item {
+    background: #f8f9fa;
+    padding: 12px;
+    border-radius: 6px;
+    text-align: center;
+}
+.skill-name { font-size: 14px; color: #2c3e50; }
+.skill-level {
+    font-size: 12px;
+    color: #95a5a6;
+    margin-top: 4px;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="name">周八</div>
+        <div class="title">全栈开发工程师</div>
+        <div class="contact">📧 zhouba@email.com | 📱 159-0000-0000 | 📍 杭州市</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">个人简介</div>
+        <div class="timeline-content" style="margin-top: 0;">
+            7年全栈开发经验，从底层架构到前端交互都有深入理解。热衷于技术探索，喜欢尝试新技术。相信代码应该简洁、高效、可维护。
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">工作经历</div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2021.03 - 至今</div>
+                <div class="timeline-title">高级全栈工程师</div>
+                <div class="timeline-company">有赞</div>
+                <div class="timeline-content">
+                    • 负责商家SaaS平台核心模块开发<br>
+                    • 从0到1搭建前端工程化体系<br>
+                    • 优化服务端渲染性能，首屏时间减少50%
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2018.06 - 2021.02</div>
+                <div class="timeline-title">全栈工程师</div>
+                <div class="timeline-company">网易</div>
+                <div class="timeline-content">
+                    • 参与网易云音乐后端服务开发<br>
+                    • 负责音乐推荐系统优化<br>
+                    • 开发内部效率工具，提升团队协作效率
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2017.01 - 2018.05</div>
+                <div class="timeline-title">前端开发工程师</div>
+                <div class="timeline-company">蘑菇街</div>
+                <div class="timeline-content">
+                    • 负责移动端H5页面开发<br>
+                    • 参与组件库建设
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">项目经验</div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2022.06 - 2023.05</div>
+                <div class="timeline-title">智能客服系统</div>
+                <div class="timeline-company">项目负责人</div>
+                <div class="timeline-content">
+                    基于NLP的智能客服系统，支持多轮对话、知识库检索。日均处理咨询10万+，自动应答率达85%。
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">教育背景</div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-date">2014.09 - 2017.06</div>
+                <div class="timeline-title">软件工程硕士</div>
+                <div class="timeline-company">南京大学</div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-date">2010.09 - 2014.06</div>
+                <div class="timeline-title">计算机科学与技术学士</div>
+                <div class="timeline-company">南京大学</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">专业技能</div>
+        <div class="skills-grid">
+            <div class="skill-item">
+                <div class="skill-name">JavaScript</div>
+                <div class="skill-level">精通</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">TypeScript</div>
+                <div class="skill-level">熟练</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">React</div>
+                <div class="skill-level">精通</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Vue</div>
+                <div class="skill-level">熟练</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Node.js</div>
+                <div class="skill-level">熟练</div>
+            </div>
+            <div class="skill-item">
+                <div class="skill-name">Python</div>
+                <div class="skill-level">了解</div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

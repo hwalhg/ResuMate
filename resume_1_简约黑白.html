@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简历</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #fff;
+    padding: 40px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+.header {
+    text-align: center;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #333;
+}
+.name { font-size: 36px; font-weight: bold; color: #333; }
+.title { font-size: 18px; color: #666; margin-top: 10px; }
+.contact { font-size: 14px; color: #999; margin-top: 15px; }
+.section { margin-top: 30px; }
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    border-left: 4px solid #333;
+    padding-left: 10px;
+    margin-bottom: 15px;
+}
+.item { margin-bottom: 20px; }
+.item-title { font-size: 16px; font-weight: bold; color: #333; }
+.item-subtitle { font-size: 14px; color: #666; margin-top: 5px; }
+.item-content { font-size: 14px; color: #666; line-height: 1.8; margin-top: 8px; }
+.skills { display: flex; flex-wrap: wrap; gap: 10px; }
+.skill-tag {
+    background: #f5f5f5;
+    padding: 5px 12px;
+    font-size: 14px;
+    color: #666;
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="name">张三</div>
+        <div class="title">高级前端工程师</div>
+        <div class="contact">电话：138-0000-0000 | 邮箱：zhangsan@email.com | 地址：北京市</div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">个人简介</div>
+        <div class="item-content">
+            5年前端开发经验，精通React、Vue等主流框架，具备大型项目架构能力。追求代码质量和用户体验，有良好的团队协作和技术分享精神。
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">工作经历</div>
+        <div class="item">
+            <div class="item-title">阿里巴巴集团 | 前端开发工程师</div>
+            <div class="item-subtitle">2021.03 - 至今</div>
+            <div class="item-content">
+                • 负责淘宝主站核心模块开发，日均PV千万级<br>
+                • 主导前端工程化改造，构建时间缩短40%<br>
+                • 设计并实现组件库，覆盖20+业务线
+            </div>
+        </div>
+        <div class="item">
+            <div class="item-title">字节跳动 | 前端工程师</div>
+            <div class="item-subtitle">2019.06 - 2021.02</div>
+            <div class="item-content">
+                • 参与抖音电商后台系统开发<br>
+                • 优化首屏加载速度，LCP提升30%<br>
+                • 参与内部工具链建设，提升团队效率
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">项目经验</div>
+        <div class="item">
+            <div class="item-title">企业级低代码平台</div>
+            <div class="item-subtitle">2022.01 - 2022.12 | 核心开发者</div>
+            <div class="item-content">
+                设计并开发可视化页面搭建平台，支持拖拽配置、实时预览、一键发布。目前已有100+业务方使用，累计搭建页面5000+。
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">教育背景</div>
+        <div class="item">
+            <div class="item-title">清华大学 | 计算机科学与技术 | 本科</div>
+            <div class="item-subtitle">2015.09 - 2019.06</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="section-title">专业技能</div>
+        <div class="skills">
+            <span class="skill-tag">JavaScript/TypeScript</span>
+            <span class="skill-tag">React/Vue</span>
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Webpack/Vite</span>
+            <span class="skill-tag">Git</span>
+        </div>
+    </div>
+</div>
+</body>
+</html>

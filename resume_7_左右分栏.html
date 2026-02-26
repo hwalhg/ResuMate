@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>个人简历</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: #f5f5f5;
+    padding: 30px;
+}
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fff;
+    display: flex;
+    min-height: 1000px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+.sidebar {
+    width: 300px;
+    background: #2c3e50;
+    color: #fff;
+    padding: 40px 25px;
+}
+.main { flex: 1; padding: 40px 35px; }
+.avatar {
+    width: 120px;
+    height: 120px;
+    background: #34495e;
+    border-radius: 50%;
+    margin: 0 auto 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+}
+.name { font-size: 24px; font-weight: bold; text-align: center; }
+.title { font-size: 16px; text-align: center; opacity: 0.8; margin-top: 8px; }
+.divider {
+    width: 50px;
+    height: 2px;
+    background: rgba(255,255,255,0.3);
+    margin: 20px auto;
+}
+.sidebar-section { margin-bottom: 30px; }
+.sidebar-title {
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+    opacity: 0.9;
+}
+.contact-item {
+    font-size: 13px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.skill-item {
+    background: rgba(255,255,255,0.1);
+    padding: 8px 12px;
+    font-size: 13px;
+    margin-bottom: 8px;
+    border-radius: 4px;
+}
+.section { margin-bottom: 30px; }
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 8px;
+}
+.item { margin-bottom: 25px; }
+.item-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
+.item-title { font-size: 16px; font-weight: bold; color: #2c3e50; }
+.item-date { font-size: 14px; color: #7f8c8d; }
+.item-subtitle { font-size: 14px; color: #3498db; margin-bottom: 8px; }
+.item-content {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.7;
+}
+.project-item {
+    background: #f8f9fa;
+    padding: 15px;
+    border-left: 3px solid #3498db;
+    margin-bottom: 15px;
+}
+.project-title { font-size: 15px; font-weight: bold; color: #2c3e50; margin-bottom: 5px; }
+.project-desc { font-size: 13px; color: #666; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <div class="avatar">👤</div>
+        <div class="name">吴九</div>
+        <div class="title">产品运营总监</div>
+        <div class="divider"></div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">联系方式</div>
+            <div class="contact-item">📧 wujiu@company.com</div>
+            <div class="contact-item">📱 136-0000-0000</div>
+            <div class="contact-item">📍 广州市天河区</div>
+            <div class="contact-item">🔗 linkedin.com/in/wujiu</div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">专业技能</div>
+            <div class="skill-item">用户增长</div>
+            <div class="skill-item">数据分析</div>
+            <div class="skill-item">A/B测试</div>
+            <div class="skill-item">活动运营</div>
+            <div class="skill-item">内容营销</div>
+            <div class="skill-item">SQL/Tableau</div>
+        </div>
+
+        <div class="sidebar-section">
+            <div class="sidebar-title">语言能力</div>
+            <div class="contact-item">中文：母语</div>
+            <div class="contact-item">英语：流利 (CET-6)</div>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="section">
+            <div class="section-title">个人简介</div>
+            <div class="item-content">
+                8年互联网运营经验，专注用户增长与商业化。曾在美团、字节跳动负责过亿级用户产品的运营策略。擅长用数据驱动决策，通过精细化运营实现用户与业务的双重增长。
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">工作经历</div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">字节跳动 | 运营总监</div>
+                    <div class="item-date">2021.06 - 至今</div>
+                </div>
+                <div class="item-subtitle">负责今日头条商业化运营</div>
+                <div class="item-content">
+                    • 带领20人团队，负责广告产品运营策略<br>
+                    • 设计智能推荐优化方案，广告CTR提升45%<br>
+                    • 建立广告主运营体系，客户满意度达92%
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">美团 | 高级运营经理</div>
+                    <div class="item-date">2018.03 - 2021.05</div>
+                </div>
+                <div class="item-subtitle">负责外卖用户增长</div>
+                <div class="item-content">
+                    • 主导"美团红包"裂变活动，带来300万新用户<br>
+                    • 优化会员体系，会员ARPU提升28%<br>
+                    • 搭建用户分层运营模型，精准触达效率提升60%
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">项目经验</div>
+            <div class="project-item">
+                <div class="project-title">智能投放平台</div>
+                <div class="project-desc">
+                    为广告主提供一站式投放管理平台，支持AI智能出价、素材自动优化。覆盖广告主5万+，平台GMV年增长120%。
+                </div>
+            </div>
+            <div class="project-item">
+                <div class="project-title">会员增长体系</div>
+                <div class="project-desc">
+                    设计完整的会员成长体系，包含等级权益、任务系统、专属活动。会员数从100万增长至500万，会员收入占比提升至35%。
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">教育背景</div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">中山大学 | 工商管理硕士 (MBA)</div>
+                    <div class="item-date">2016.09 - 2018.06</div>
+                </div>
+            </div>
+            <div class="item">
+                <div class="item-header">
+                    <div class="item-title">暨南大学 | 市场营销 | 本科</div>
+                    <div class="item-date">2012.09 - 2016.06</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
