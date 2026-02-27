@@ -976,10 +976,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // ==================== 支付配置 ====================
 const PAYMENT_CONFIG = {
     // 支付宝收款码图片地址
-    alipayQr: 'https://raw.githubusercontent.com/hwalhg/ResuMate/main/alipay.jpg',
+    alipayQr: 'assets/alipay.jpg',
 
     // 微信收款码图片地址
-    wechatQr: 'https://raw.githubusercontent.com/hwalhg/ResuMate/main/wechat.jpg',
+    wechatQr: 'assets/wechat.jpg',
 
     // 价格配置
     prices: {
