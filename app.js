@@ -975,11 +975,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ==================== 支付配置 ====================
 const PAYMENT_CONFIG = {
-    // 支付宝收款码图片地址（上传你的收款码图片到服务器或图床）
-    alipayQr: '', // 留空显示占位符
+    // 支付宝收款码图片地址
+    alipayQr: 'https://raw.githubusercontent.com/hwalhg/ResuMate/main/alipay.jpg',
 
     // 微信收款码图片地址
-    wechatQr: '', // 留空显示占位符
+    wechatQr: 'https://raw.githubusercontent.com/hwalhg/ResuMate/main/wechat.jpg',
 
     // 价格配置
     prices: {
