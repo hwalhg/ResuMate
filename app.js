@@ -973,6 +973,24 @@ document.addEventListener('DOMContentLoaded', () => {
     aiSection.appendChild(settingBtn);
 });
 
+// ==================== 支付配置 ====================
+const PAYMENT_CONFIG = {
+    // 支付宝收款码图片地址（上传你的收款码图片到服务器或图床）
+    alipayQr: '', // 留空显示占位符
+
+    // 微信收款码图片地址
+    wechatQr: '', // 留空显示占位符
+
+    // 价格配置
+    prices: {
+        single: 3,      // 单份价格
+        bundle: 9.9      // 全套价格
+    }
+};
+
+let selectedPlan = 'bundle'; // 'single' 或 'bundle'
+let selectedPaymentMethod = 'alipay'; // 'alipay' 或 'wechat'
+
 // ==================== 导出功能 ====================
 function showExportModal() {
     document.getElementById('exportModal').classList.add('active');
@@ -982,12 +1000,96 @@ function hideExportModal() {
     document.getElementById('exportModal').classList.remove('active');
 }
 
-function exportResume() {
-    const format = document.querySelector('input[name="export"]:checked').value;
+function selectPlan(plan) {
+    selectedPlan = plan;
+    document.getElementById('planSingle').classList.remove('selected');
+    document.getElementById('planBundle').classList.remove('selected');
+    document.getElementById('plan' + plan.charAt(0).toUpperCase() + plan.slice(1)).classList.add('selected');
+}
 
-    if (format === 'html') {
-        const htmlContent = templates[currentTemplate].render();
-        const fullHtml = `<!DOCTYPE html>
+function showPaymentModal() {
+    hideExportModal();
+
+    // 更新支付弹窗信息
+    const isBundle = selectedPlan === 'bundle';
+    const price = isBundle ? PAYMENT_CONFIG.prices.bundle : PAYMENT_CONFIG.prices.single;
+    const desc = isBundle ? '全套模板 - 10套简历模板' : `模板${currentTemplate} - 简历模板`;
+
+    document.getElementById('paymentDesc').textContent = desc;
+    document.getElementById('paymentAmount').textContent = `¥${price.toFixed(2)}`;
+
+    // 显示二维码
+    updateQRCode();
+
+    document.getElementById('paymentModal').classList.add('active');
+}
+
+function hidePaymentModal() {
+    document.getElementById('paymentModal').classList.remove('active');
+}
+
+function selectPaymentMethod(method) {
+    selectedPaymentMethod = method;
+
+    document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+
+    updateQRCode();
+}
+
+function updateQRCode() {
+    const placeholder = document.getElementById('qrPlaceholder');
+    const qrUrl = selectedPaymentMethod === 'alipay' ? PAYMENT_CONFIG.alipayQr : PAYMENT_CONFIG.wechatQr;
+
+    if (qrUrl) {
+        // 显示实际二维码图片
+        placeholder.innerHTML = `<img src="${qrUrl}" alt="支付二维码" style="width: 100%; height: 100%; object-fit: contain;">`;
+    } else {
+        // 显示占位符（开发者需配置实际二维码）
+        placeholder.innerHTML = `
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="7" height="7"/>
+                <rect x="14" y="3" width="7" height="7"/>
+                <rect x="14" y="14" width="7" height="7"/>
+                <rect x="3" y="14" width="7" height="7"/>
+                <rect x="7" y="7" width="10" height="10"/>
+            </svg>
+            <div style="margin-top: 8px;">请配置收款码</div>
+        `;
+    }
+}
+
+function checkPayment() {
+    // 在这里实现支付验证逻辑
+    // 方式1：简单的密码验证（测试用）
+    // 方式2：调用支付回调接口
+    // 方式3：用户输入支付凭证，人工审核
+
+    // 简单实现：使用 localStorage 记录支付状态（仅用于演示）
+    const paymentVerified = confirm('✅ 确认已完成支付？\n\n点击"确定"将开始下载。');
+
+    if (paymentVerified) {
+        // 记录支付（演示用，实际项目需要服务器验证）
+        localStorage.setItem(`payment_${selectedPlan}_${Date.now()}`, 'verified');
+        doDownload();
+    }
+}
+
+function doDownload() {
+    hidePaymentModal();
+
+    if (selectedPlan === 'bundle') {
+        // 下载全套模板
+        downloadAllTemplates();
+    } else {
+        // 下载单份模板
+        downloadCurrentTemplate();
+    }
+}
+
+function downloadCurrentTemplate() {
+    const htmlContent = templates[currentTemplate].render();
+    const fullHtml = `<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -998,12 +1100,57 @@ function exportResume() {
 ${htmlContent}
 </body>
 </html>`;
-        downloadFile(fullHtml, `${resumeData.name}_简历.html`, 'text/html');
-    } else {
-        // PDF 导出 - 打印方式
-        window.print();
-    }
 
+    downloadFile(fullHtml, `${resumeData.name}_简历_${templates[currentTemplate].name}.html`, 'text/html');
+    alert('✅ 下载成功！');
+}
+
+function downloadAllTemplates() {
+    // 压缩下载所有模板
+    // 这里简化为逐个下载
+    const templateNames = Object.entries(templates);
+    let delay = 0;
+
+    templateNames.forEach(([id, tmpl], index) => {
+        setTimeout(() => {
+            const htmlContent = tmpl.render();
+            const styles = getTemplateStylesFromRender(htmlContent);
+            const fullHtml = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>${resumeData.name} - 简历</title>
+<style>${styles}</style>
+</head>
+<body>
+${htmlContent}
+</body>
+</html>`;
+            downloadFile(fullHtml, `${resumeData.name}_简历_${tmpl.name}.html`, 'text/html');
+        }, delay);
+        delay += 500; // 间隔500ms下载
+    });
+
+    setTimeout(() => {
+        alert('✅ 全套模板下载完成！\n共下载 ' + templateNames.length + ' 份模板。');
+    }, delay + 500);
+}
+
+function exportResume() {
+    // 这个函数保留用于免费预览导出（可选）
+    const htmlContent = templates[currentTemplate].render();
+    const fullHtml = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>${resumeData.name} - 简历</title>
+<style>${getTemplateStyles()}</style>
+</head>
+<body>
+${htmlContent}
+</body>
+</html>`;
+    downloadFile(fullHtml, `${resumeData.name}_简历.html`, 'text/html');
     hideExportModal();
 }
 
@@ -1011,6 +1158,12 @@ function getTemplateStyles() {
     const template = templates[currentTemplate];
     const html = template.render();
     const match = html.match(/<style>([\s\S]*?)<\/style>/);
+    return match ? match[1] : '';
+}
+
+// 获取指定模板的样式（用于批量下载）
+function getTemplateStylesFromRender(renderedHtml) {
+    const match = renderedHtml.match(/<style>([\s\S]*?)<\/style>/);
     return match ? match[1] : '';
 }
 
@@ -1028,5 +1181,11 @@ function downloadFile(content, filename, type) {
 document.getElementById('exportModal').addEventListener('click', (e) => {
     if (e.target.id === 'exportModal') {
         hideExportModal();
+    }
+});
+
+document.getElementById('paymentModal').addEventListener('click', (e) => {
+    if (e.target.id === 'paymentModal') {
+        hidePaymentModal();
     }
 });

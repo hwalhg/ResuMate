@@ -1,0 +1,28 @@
+# 收款码图片（不要上传到公开仓库）
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.svg
+
+# 系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# PDF 文件（生成的简历PDF）
+*.pdf
+
+# Node modules (如果以后用)
+node_modules/
