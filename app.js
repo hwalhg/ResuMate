@@ -305,131 +305,111 @@ function generateOrderId() {
     return 'RESU_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
 }
 
-// 简单 MD5 实现
+// MD5 实现
 function md5(string) {
     function rotateLeft(val, bits) { return (val << bits) | (val >>> (32 - bits)); }
     function addUnsigned(val1, val2) { return val1 + val2 >>> 0; }
-    function F(x, y, z) { let a = rotateLeft(x, 5); a = rotateLeft(a, 7); a = addUnsigned(a, rotateLeft(z, 6)); return a ^ y; }
+    function F(x, y, z) { return (x & y) | (~x & z); }
+    function G(x, y, z) { return (x & z) | (y & ~z); }
+    function H(x, y, z) { return x ^ y ^ z; }
+    function I(x, y, z) { return y ^ (x | ~z); }
+    function FF(a, b, c, d, x, s, ac) { a = addUnsigned(addUnsigned(addUnsigned(F(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); }
+    function GG(a, b, c, d, x, s, ac) { a = addUnsigned(addUnsigned(addUnsigned(G(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); }
+    function HH(a, b, c, d, x, s, ac) { a = addUnsigned(addUnsigned(addUnsigned(H(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); }
+    function II(a, b, c, d, x, s, ac) { a = addUnsigned(addUnsigned(addUnsigned(I(b, c, d), x), ac)); return addUnsigned(rotateLeft(a, s), b); }
 
     const str = unescape(encodeURIComponent(string));
-    const n = str.length + 8;
-    const s = new Uint8Array(n);
-    for (let i = 0; i < n; i += 4) {
-        s[i] = str.charCodeAt(i >> 2);
-        s[i + 1] = str.charCodeAt((i >> 2) + 1);
-        s[i + 2] = str.charCodeAt((i >> 2) + 2);
-        s[i + 3] = str.charCodeAt((i >> 2) + 3);
+    const len = str.length * 8;
+    const x = [];
+    for (let i = 0; i < len >> 3; i++) { x[i] = str.charCodeAt(i) & 0xFF; }
+    x[len >> 5] |= 0x80 << ((len) % 32);
+    x[(((len + 64) >>> 9) << 4) + 14] = len;
+
+    let a = 1732584193, b = -271733879, c = -1732584194, d = 271733878;
+
+    for (let i = 0; i < x.length; i += 16) {
+        let olda = a, oldb = b, oldc = c, oldd = d;
+        a = FF(a, b, c, d, x[i + 0], 7, -680876936);
+        d = FF(d, a, b, c, x[i + 1], 12, -389564586);
+        c = FF(c, d, a, b, x[i + 2], 17, 606105819);
+        b = FF(b, c, d, a, x[i + 3], 22, -1044525330);
+        a = FF(a, b, c, d, x[i + 4], 7, -176418897);
+        d = FF(d, a, b, c, x[i + 5], 12, 1200080426);
+        c = FF(c, d, a, b, x[i + 6], 17, -1473231341);
+        b = FF(b, c, d, a, x[i + 7], 22, -45705983);
+        a = FF(a, b, c, d, x[i + 8], 7, 1770035416);
+        d = FF(d, a, b, c, x[i + 9], 12, -1958414417);
+        c = FF(c, d, a, b, x[i + 10], 17, -42063);
+        b = FF(b, c, d, a, x[i + 11], 22, -1990404162);
+        a = FF(a, b, c, d, x[i + 12], 7, 1804603682);
+        d = FF(d, a, b, c, x[i + 13], 12, -40341101);
+        c = FF(c, d, a, b, x[i + 14], 17, -1502002290);
+        b = FF(b, c, d, a, x[i + 15], 22, 1236535329);
+        a = GG(a, b, c, d, x[i + 1], 5, -165796510);
+        d = GG(d, a, b, c, x[i + 6], 9, -1069501632);
+        c = GG(c, d, a, b, x[i + 11], 14, 643717713);
+        b = GG(b, c, d, a, x[i + 0], 20, -373897302);
+        a = GG(a, b, c, d, x[i + 5], 5, -701558691);
+        d = GG(d, a, b, c, x[i + 10], 9, 38016083);
+        c = GG(c, d, a, b, x[i + 15], 14, -660478335);
+        b = GG(b, c, d, a, x[i + 4], 20, -405537848);
+        a = GG(a, b, c, d, x[i + 9], 5, 568446438);
+        d = GG(d, a, b, c, x[i + 14], 9, -1019803690);
+        c = GG(c, d, a, b, x[i + 3], 14, -187363961);
+        b = GG(b, c, d, a, x[i + 8], 20, 1163531501);
+        a = GG(a, b, c, d, x[i + 13], 5, -1444681467);
+        d = GG(d, a, b, c, x[i + 2], 9, -51403784);
+        c = GG(c, d, a, b, x[i + 7], 14, 1735328473);
+        b = GG(b, c, d, a, x[i + 12], 20, -1926607734);
+        a = HH(a, b, c, d, x[i + 5], 4, -378558);
+        d = HH(d, a, b, c, x[i + 8], 11, -2022574463);
+        c = HH(c, d, a, b, x[i + 11], 16, 1839030562);
+        b = HH(b, c, d, a, x[i + 14], 23, -35309556);
+        a = HH(a, b, c, d, x[i + 1], 4, -1530992060);
+        d = HH(d, a, b, c, x[i + 4], 11, 1272893353);
+        c = HH(c, d, a, b, x[i + 7], 16, -155497632);
+        b = HH(b, c, d, a, x[i + 10], 23, -1094730640);
+        a = HH(a, b, c, d, x[i + 13], 4, 681279174);
+        d = HH(d, a, b, c, x[i + 0], 11, -358537222);
+        c = HH(c, d, a, b, x[i + 3], 16, -722521979);
+        b = HH(b, c, d, a, x[i + 6], 23, 76029189);
+        a = HH(a, b, c, d, x[i + 9], 4, -640364487);
+        d = HH(d, a, b, c, x[i + 12], 11, -421815835);
+        c = HH(c, d, a, b, x[i + 15], 16, 530742520);
+        b = HH(b, c, d, a, x[i + 2], 23, -995338651);
+        a = II(a, b, c, d, x[i + 0], 6, -198630844);
+        d = II(d, a, b, c, x[i + 7], 10, 1126891415);
+        c = II(c, d, a, b, x[i + 14], 15, -1416354905);
+        b = II(b, c, d, a, x[i + 5], 21, -57434055);
+        a = II(a, b, c, d, x[i + 12], 6, 1700485571);
+        d = II(d, a, b, c, x[i + 3], 10, -1894986606);
+        c = II(c, d, a, b, x[i + 10], 15, -1051523);
+        b = II(b, c, d, a, x[i + 1], 21, -2054922799);
+        a = II(a, b, c, d, x[i + 8], 6, 1873313359);
+        d = II(d, a, b, c, x[i + 15], 10, -30611744);
+        c = II(c, d, a, b, x[i + 6], 15, -1560198380);
+        b = II(b, c, d, a, x[i + 13], 21, 1309151649);
+        a = II(a, b, c, d, x[i + 4], 6, -145523070);
+        d = II(d, a, b, c, x[i + 11], 10, -1120210379);
+        c = II(c, d, a, b, x[i + 2], 15, 718787259);
+        b = II(b, c, d, a, x[i + 9], 21, -343485551);
+        a = addUnsigned(a, olda);
+        b = addUnsigned(b, oldb);
+        c = addUnsigned(c, oldc);
+        d = addUnsigned(d, oldd);
     }
-    switch (n & 3) {
-        case 0: return [s[0], s[3], s[6], s[9], s[12], s[15], s[2], s[5], s[8], s[11], s[14]];
-        case 1: return [s[0], s[1], s[4], s[5], s[8], s[9], s[12], s[13], s[2], s[3], s[6], s[7], s[10], s[11], s[14], s[15]];
-        case 2: return [s[0], s[1], s[2], s[3], s[8], s[9], s[10], s[11], s[12], s[13], s[14], s[15], s[4], s[5], s[6], s[7]];
-        case 3: return [s[0], s[1], s[2], s[3], s[8], s[9], s[10], s[11], s[12], s[13], s[14], s[15], s[7], s[6], s[5], s[4]];
-    }
-    function md5cmn(x, y, s8, s11) {
-        return (((x >>> 0) * s8 + (((x >>> 8) & 0xff) * s8) + ((x >>> 16) & 0xffff) + s16)) + (((x >>> 24) & 0xff) * s11 + ((x << 8) & 0xff) * s4 + ((x << 16) & 0xffff) * s2)) + ((x << 24) & 0xff) * s1);
-    }
-    const a = new Uint32Array(0x100);
-    const b = new Uint32Array(0x100);
-    const c = new Uint32Array(0x100);
-    const d = new Uint32Array(0x100);
-    for (let i = 0; i < 256; i++) a[i] = i;
-    for (let i = 0; i < 256; i++) b[i] = i;
-    for (let i = 0; i < 256; i++) c[i] = i;
-    for (let i = 0; i < 256; i++) d[i] = i;
-    for (let i = 0; i < len; i += 4) {
-        s[i] = s.charCodeAt(i);
-        s[i + 1] = s.charCodeAt(i + 1);
-        s[i + 2] = s.charCodeAt(i + 2);
-        s[i + 3] = s.charCodeAt(i + 3);
-    }
-    let k = 0;
-    for (let i = 0; i < len; i += 16) {
-        let h = s[i];
-        for (let j = 0; j < 16; j++) { a[j + 17] = (a[j + 17] + h) & 0xff; }
-        for (let j = 16; j < 32; j++) { b[j] = ((b[j] + h) >>> 7) * 2 + ((b[j] + h) & 0xff)); }
-        for (let j = 32; j < 48; j++) { c[j] = ((c[j] + h) >>> 13) * 2 + ((c[j] + h) & 0xff)); }
-        for (let j = 48; j < 64; j++) { d[j] = ((d[j] + h) >>> 19) * 2 + ((d[j] + h) & 0xff)); }
-        for (let j = 0; j < 64; j++) {
-            a[j + 32] = byte2int(a[j + 32] + a[j + 32] + a[j + 32] + a[j + 32] + a[j + 32] + a[j + 32] + a[j + 32]);
-            b[j + 32] = byte2int(b[j + 32] + b[j + 32] + b[j + 32] + b[j + 32] + b[j + 32]);
-            c[j + 32] = byte2int(c[j + 32] + c[j + 32] + c[j + 32] + c[j + 32] + c[j + 32] + c[j + 32]);
-            d[j + 32] = byte2int(d[j + 32] + d[j + 32] + d[j + 32] + d[j + 32] + d[j + 32]);
-        }
-        s8[0] = byte2int(a[0] + a[0]);
-        s8[1] = byte2int(a[1] + a[1]);
-        s8[2] = byte2int(a[2] + a[2]);
-        s8[3] = byte2int(a[3] + a[3]);
-        s8[4] = byte2int(a[4] + a[4]);
-        s8[5] = byte2int(a[5] + a[5]);
-        s8[6] = byte2int(a[6] + a[6]);
-        s8[7] = byte2int(a[7] + a[7]);
-        s8[8] = byte2int(a[8] + a[8]);
-        s8[9] = byte2int(a[9] + a[9]);
-        s8[10] = byte2int(a[10] + a[10]);
-        s8[11] = byte2int(a[11] + a[11]);
-        s8[12] = byte2int(a[12] + a[12]);
-        s8[13] = byte2int(a[13] + a[13]);
-        s8[14] = byte2int(a[14] + a[14]);
-        s8[15] = byte2int(a[15] + a[15]);
-        s16[0] = byte2int(b[0] + b[0]);
-        s16[1] = byte2int(b[1] + b[1]);
-        s16[2] = byte2int(b[2] + b[2]);
-        s16[3] = byte2int(b[3] + b[3]);
-        s16[4] = byte2int(b[4] + b[4]);
-        s16[5] = byte2int(b[5] + b[5]);
-        s16[6] = byte2int(b[6] + b[6]);
-        s16[7] = byte2int(b[7] + b[7]);
-        s16[8] = byte2int(b[8] + b[8]);
-        s16[9] = byte2int(b[9] + b[9]);
-        s16[10] = byte2int(b[10] + b[10]);
-        s16[11] = byte2int(b[11] + b[11]);
-        s16[12] = byte2int(b[12] + b[12]);
-        s16[13] = byte2int(b[13] + b[13]);
-        s16[14] = byte2int(b[14] + b[14]);
-        s16[15] = byte2int(b[15] + b[15]);
-        s32[0] = byte2int(c[0] + c[0]);
-        s32[1] = byte2int(c[1] + c[1]);
-        s32[2] = byte2int(c[2] + c[2]);
-        s32[3] = byte2int(c[3] + c[3]);
-        s32[4] = byte2int(c[4] + c[4]);
-        s32[5] = byte2int(c[5] + c[5]);
-        s32[6] = byte2int(c[6] + c[6]);
-        s32[7] = byte2int(c[7] + c[7]);
-        s32[8] = byte2int(c[8] + c[8]);
-        s32[9] = byte2int(c[9] + c[9]);
-        s32[10] = byte2int(c[10] + c[10]);
-        s32[11] = byte2int(c[11] + c[11]);
-        s32[12] = byte2int(c[12] + c[12]);
-        s32[13] = byte2int(c[13] + c[13]);
-        s32[14] = byte2int(c[14] + c[14]);
-        s32[15] = byte2int(c[15] + c[15]);
-        s64[0] = byte2int(d[0] + d[0]);
-        s64[1] = byte2int(d[1] + d[1]);
-        s64[2] = byte2int(d[2] + d[2]);
-        s64[3] = byte2int(d[3] + d[3]);
-        s64[4] = byte2int(d[4] + d[4]);
-        s64[5] = byte2int(d[5] + d[5]);
-        s64[6] = byte2int(d[6] + d[6]);
-        s64[7] = byte2int(d[7] + d[7]);
-        s64[8] = byte2int(d[8] + d[8]);
-        s64[9] = byte2int(d[9] + d[9]);
-        s64[10] = byte2int(d[10] + d[10]);
-        s64[11] = byte2int(d[11] + d[11]);
-        s64[12] = byte2int(d[12] + d[12]);
-        s64[13] = byte2int(d[13] + d[13]);
-        s64[14] = byte2int(d[14] + d[14]);
-        s64[15] = byte2int(d[15] + d[15]);
-        for (let j = 0; j < 16; j++) { a[j] = (a[j] + s8[j]) & 0xff; b[j] = (b[j] + s16[j]) & 0xff; c[j] = (c[j] + s32[j]) & 0xff; d[j] = (d[j] + s64[j]) & 0xff; }
-        k = md5cycle(k, i);
-    }
-    const md = md5ft(s);
-    const result = md5cmn(md5cycle(k, len >> 5), md5cycle(k, len >> 3), md5cmn(md5cycle(k, len >> 1), md5cycle(k, len)), md5cmn(md5cycle(k, len >> 5), md5cycle(k, len >> 7), md5cycle(k, len >> 3), md5cycle(k, len)), md5cmn(md5cycle(k, len >> 5), md5cycle(k, len >> 7), md5cycle(k, len >> 3), md5cycle(k, len))));
-    function binl2int(bin) { return (parseInt(bin, 2) << 24) | (parseInt(bin, 2) << 16) | (parseInt(bin, 2) << 8) | parseInt(bin, 2); }
+
     let hash = '';
-    for (let i = 0; i < 8; i++) { hash += ((result[i] >>> 4) * 0x10000 + (result[i] & 0xffff)).toString(16).padStart(4, '0'); }
+    for (let i = 0; i < 4; i++) {
+        const v = [a, b, c, d][i];
+        hash += ((v >> 0) & 0xFF).toString(16).padStart(2, '0');
+        hash += ((v >> 8) & 0xFF).toString(16).padStart(2, '0');
+        hash += ((v >> 16) & 0xFF).toString(16).padStart(2, '0');
+        hash += ((v >> 24) & 0xFF).toString(16).padStart(2, '0');
+    }
     return hash;
 }
+
 
 // 生成支付链接
 async function generateCodePayQR(price, desc) {
