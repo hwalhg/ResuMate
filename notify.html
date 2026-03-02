@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>支付成功 - ResuMate</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.container {
+    background: #fff;
+    border-radius: 16px;
+    padding: 40px;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+.icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #d1fae5 0%, #a8edea 100%);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon::before {
+    content: "✓";
+    font-size: 48px;
+    color: #10b981;
+}
+h1 { color: #1e293b; font-size: 24px; margin-bottom: 10px; }
+p { color: #64748b; font-size: 15px; margin-bottom: 25px; line-height: 1.6; }
+.order-info {
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+.order-info div {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #475569;
+}
+.order-info strong { color: #1e293b; }
+.btn {
+    display: block;
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: transform 0.2s;
+}
+.btn:hover { transform: scale(1.05); }
+.tip {
+    margin-top: 25px;
+    padding: 12px;
+    background: #fffbeb0;
+    border-radius: 6px;
+    font-size: 13px;
+    color: #92400e;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon"></div>
+        <h1>支付成功！</h1>
+        <p>感谢您的购买，简历模板已解锁。</p>
+
+        <div class="order-info">
+            <div>订单号: <strong><span id="tradeNo">--</span></strong></div>
+            <div>支付金额: <strong><span id="money">--</span></strong></div>
+            <div>支付方式: <strong><span id="payType">--</span></strong></div>
+        </div>
+
+        <a href="javascript:history.back()" class="btn">返回简历生成器</a>
+
+        <div class="tip">
+            💡 提示：您可以在简历生成器页面继续下载模板
+        </div>
+    </div>
+
+    <script>
+        // 从 URL 参数获取订单信息
+        const params = new URLSearchParams(window.location.search);
+        const tradeNo = params.get('trade_no') || '--';
+        const money = params.get('money') || '--';
+        const payType = params.get('type') || '--';
+
+        // 显示订单信息
+        document.getElementById('tradeNo').textContent = tradeNo;
+        document.getElementById('money').textContent = money + '元';
+        document.getElementById('payType').textContent = payType === 'alipay' ? '支付宝' : '微信支付';
+
+        // 存储支付状态到 localStorage
+        const paymentData = {
+            tradeNo: tradeNo,
+            money: money,
+            payType: payType,
+            timestamp: Date.now()
+        };
+        localStorage.setItem('resumate_payment_verified', JSON.stringify(paymentData));
+    </script>
+</body>
+</html>
