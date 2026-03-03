@@ -50,7 +50,7 @@ const PAYMENT_CONFIG = {
     codepay: {
         pid: '11564',
         key: 'gsxieliodOM2nqHTCFa5',
-        apiUrl: 'https://pay.ococn.cn/',
+        apiUrl: 'https://pay.ococn.cn/xpay/epay/mapi.php',
         notifyUrl: 'https://hwalhg.github.io/ResuMate/notify.html',
         returnUrl: 'https://hwalhg.github.io/ResuMate/notify.html'
     },
@@ -431,7 +431,7 @@ async function generateCodePayQR(price, desc) {
         out_trade_no: orderId,
         name: 'ResuMate 简历模板',
         money: price.toString(),
-        client_ip: '127.0.0.1'
+        device: 'pc'
     };
     const alipaySign = createSign(alipayParams);
 
@@ -444,40 +444,48 @@ async function generateCodePayQR(price, desc) {
         out_trade_no: orderId,
         name: 'ResuMate 简历模板',
         money: price.toString(),
-        client_ip: '127.0.0.1'
+        device: 'pc'
     };
     const wechatSign = createSign(wechatParams);
 
-    // 调用 CodePay API 获取二维码
+    localStorage.setItem('current_order', JSON.stringify({ orderId, price, desc, timestamp: Date.now() }));
+
+    // 调用 CodePay API 获取二维码（POST 请求）
     try {
         const alipayQr = await fetchCodePayQR(apiUrl, alipayParams, alipaySign);
         const wechatQr = await fetchCodePayQR(apiUrl, wechatParams, wechatSign);
         updateQRCodeDisplay(alipayQr, wechatQr, price, orderId);
     } catch (error) {
         console.error('获取支付二维码失败:', error);
-        // 失败时使用第三方 QR 码 API
-        const alipayUrl = `${apiUrl}?pid=${pid}&type=alipay&notify_url=${encodeURIComponent(notifyUrl)}&return_url=${encodeURIComponent(returnUrl)}&out_trade_no=${orderId}&name=${encodeURIComponent('ResuMate 简历模板')}&money=${price}&sign=${alipaySign}&client_ip=127.0.0.1`;
-        const wechatUrl = `${apiUrl}?pid=${pid}&type=wxpay&notify_url=${encodeURIComponent(notifyUrl)}&return_url=${encodeURIComponent(returnUrl)}&out_trade_no=${orderId}&name=${encodeURIComponent('ResuMate 简历模板')}&money=${price}&sign=${wechatSign}&client_ip=127.0.0.1`;
-        currentAlipayUrl = alipayUrl;
-        currentWechatUrl = wechatUrl;
-        updateQRCodeDisplay(getQRCodeUrl(alipayUrl), getQRCodeUrl(wechatUrl), price, orderId);
+        // 失败时显示错误信息
+        const placeholder = document.getElementById('qrPlaceholder');
+        placeholder.innerHTML = `<div style="color: #ef4444; font-size: 14px; text-align: center; padding: 20px;">
+            <div style="font-size: 32px; margin-bottom: 10px;">⚠️</div>
+            <div>获取支付二维码失败</div>
+            <div style="font-size: 12px; color: #666; margin-top: 10px;">${error.message}</div>
+        </div>`;
     }
 }
 
-// 调用 CodePay API 获取二维码
+// 调用 CodePay API 获取二维码（POST 请求）
 async function fetchCodePayQR(apiUrl, params, sign) {
     try {
-        // 构建请求 URL
-        const queryString = new URLSearchParams({ ...params, sign }).toString();
-        const requestUrl = `${apiUrl}?${queryString}`;
+        // 添加签名字符串
+        const allParams = { ...params, sign };
+        const formData = new URLSearchParams();
+        for (const [key, value] of Object.entries(allParams)) {
+            formData.append(key, value);
+        }
 
-        console.log('请求 CodePay API:', requestUrl);
+        console.log('请求 CodePay API:', apiUrl);
+        console.log('请求参数:', allParams);
 
-        const response = await fetch(requestUrl, {
-            method: 'GET',
+        const response = await fetch(apiUrl, {
+            method: 'POST',
             headers: {
-                'Accept': 'application/json'
-            }
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData
         });
 
         if (!response.ok) {
@@ -487,10 +495,17 @@ async function fetchCodePayQR(apiUrl, params, sign) {
         const text = await response.text();
         console.log('CodePay API 响应:', text);
 
-        // CodePay API 可能返回 JSON
+        // CodePay API 返回 JSON 格式
         try {
             const data = JSON.parse(text);
-            // 如果返回 JSON，提取二维码 URL
+            console.log('解析后的数据:', data);
+
+            // 检查返回状态
+            if (data.code !== 1) {
+                throw new Error(data.msg || '支付接口返回失败');
+            }
+
+            // 提取二维码 URL（只返回其中一个）
             if (data.qrcode) {
                 return data.qrcode;
             }
@@ -500,19 +515,18 @@ async function fetchCodePayQR(apiUrl, params, sign) {
             if (data.url) {
                 return data.url;
             }
-            if (data.code === 1 && data.msg) {
-                throw new Error(data.msg);
+            if (data.urlscheme) {
+                // 小程序跳转 URL，转换为二维码
+                return getQRCodeUrl(data.urlscheme);
             }
+
+            throw new Error('未返回二维码数据');
         } catch (e) {
-            // 不是 JSON，可能是直接返回的图片数据
+            if (e instanceof SyntaxError) {
+                throw new Error(`解析响应失败: ${text.substring(0, 100)}`);
+            }
+            throw e;
         }
-
-        // 如果返回的是图片 URL，直接返回
-        if (text.startsWith('http') || text.startsWith('https')) {
-            return text;
-        }
-
-        throw new Error('无法解析 CodePay API 响应');
     } catch (error) {
         console.error('fetchCodePayQR error:', error);
         throw error;
@@ -525,13 +539,21 @@ function getQRCodeUrl(url) {
 }
 
 // 更新二维码显示
-function updateQRCodeDisplay(alipayUrl, wechatUrl, price, orderId) {
+function updateQRCodeDisplay(alipayQr, wechatQr, price, orderId) {
     const placeholder = document.getElementById('qrPlaceholder');
 
     // 根据选择的支付方式显示对应的二维码
-    const qrUrl = selectedPaymentMethod === 'alipay' ? getQRCodeUrl(alipayUrl) : getQRCodeUrl(wechatUrl);
+    const rawQrUrl = selectedPaymentMethod === 'alipay' ? alipayQr : wechatQr;
+    console.log('显示二维码URL:', rawQrUrl);
 
-    placeholder.innerHTML = `<img src="${qrUrl}" alt="支付二维码" style="width: 100%; height: 100%; object-fit: contain;">`;
+    // 如果返回的是 weixin:// 开头的 URL，需要生成二维码
+    if (rawQrUrl.startsWith('weixin://') || rawQrUrl.startsWith('http') || rawQrUrl.startsWith('https')) {
+        const qrUrl = getQRCodeUrl(rawQrUrl);
+        placeholder.innerHTML = `<img src="${qrUrl}" alt="支付二维码" style="width: 100%; height: 100%; object-fit: contain;">`;
+    } else {
+        // 可能是直接的二维码图片 URL
+        placeholder.innerHTML = `<img src="${rawQrUrl}" alt="支付二维码" style="width: 100%; height: 100%; object-fit: contain;">`;
+    }
 }
 
 // 检查支付状态
@@ -589,9 +611,10 @@ function selectPaymentMethod(method) {
     document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('active'));
     event.currentTarget.classList.add('active');
 
-    // 刷新二维码显示
-    if (currentAlipayUrl && currentWechatUrl) {
-        updateQRCodeDisplay(currentAlipayUrl, currentWechatUrl, 0, '');
+    // 重新获取对应支付方式的二维码
+    const currentOrder = JSON.parse(localStorage.getItem('current_order') || '{}');
+    if (currentOrder.orderId && currentOrder.price && currentOrder.desc) {
+        generateCodePayQR(currentOrder.price, currentOrder.desc);
     }
 }
 
